@@ -16,8 +16,7 @@ class DMroleCommand extends commando.Command {
 
     async run(message, args){
         let role = message.mentions.roles.first();
-        var msg = message.content;
-        let timeout = Math.floor(Math.random() * config.timeout);
+        let msg = message.content;
 
 
         if(!role) {
@@ -40,15 +39,26 @@ class DMroleCommand extends commando.Command {
             return;
         }
 
-        console.log(`Responding to ${message.author}, sending message to ${role}.`)
-        role.members.forEach(member => {
-            let timeout = Math.floor(Math.random() * config.timeout);
-            console.log(`DMing ${member.user.username} now, waited ${timeout}ms.  [${timeout/1000}s]`);
-            setTimeout(function () {
-                member.send(`${msg} \n [${Math.floor(Math.random() * 9999)}]`);
-            }, timeout)
-        });
+
+        let memberarray = role.members.array();
+        let membercount = memberarray.length;
+        console.log(`Responding to ${message.author.username} :  Sending message to all ${membercount} members of role ${role.name}.`)
+        for (var i = 0; i < membercount; i++) {
+            let timeout = Math.floor((Math.random() * (config.wait - 0.01)) * 1000) + 10;
+            let member = memberarray[i];
+            await sleep(timeout);
+            if(i == (membercount-1)) {
+                console.log(`Waited ${timeout}ms.\t\\/\tDMing ${member.user.username}`);
+            } else {
+                console.log(`Waited ${timeout}ms.\t|${i + 1}|\tDMing ${member.user.username}`);
+            }
+            member.send(`${msg} \n\n [${timeout}]`);
+        }
     }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = DMroleCommand;
