@@ -28,7 +28,7 @@ If you are not running Windows, you need to open a terminal in the bot folder an
 Please, have common sense while using this bot.
 I am not responsible for anything you do with this bot.
 
-If you find any issues, you can PM me on V3rmillion for fast support.
+Do not try the token included, it's deactivated.
 
 **Donate to this guy!**
 
